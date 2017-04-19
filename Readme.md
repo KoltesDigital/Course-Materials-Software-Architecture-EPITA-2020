@@ -21,7 +21,8 @@ Open _build\StealthFactor.sln_, choose your target, and build.
 
 ### Linux
 
-    premake5 gmake
+    apt-get install -y g++ g++-multilib libode-dev libsfml-dev make
+    premake5 gmake2
     cd build
     make config=release_linux64
 
