@@ -24,7 +24,7 @@ namespace engine
 
 		void Manager::update()
 		{
-			for (auto entity : _entities)
+			for (auto &entity : _entities)
 			{
 				entity->update();
 			}
@@ -39,7 +39,7 @@ namespace engine
 
 		void Manager::draw()
 		{
-			for (auto entity : _entities)
+			for (auto &entity : _entities)
 			{
 				entity->draw();
 			}
@@ -47,10 +47,6 @@ namespace engine
 
 		void Manager::loadMap(const std::string &mapName)
 		{
-			for (auto entity : _entities)
-			{
-				delete entity;
-			}
 			_entities.clear();
 
 			std::stringstream filename;
@@ -82,10 +78,10 @@ namespace engine
 
 						std::string archetypeName = xmlElement.child_value("archetype");
 
-						auto entity = new entities::Enemy{ _context, archetypeName };
+						EntityPtr entity{ new entities::Enemy{ _context, archetypeName } };
 						entity->setPosition(sf::Vector2f{ (column + 0.5f) * CELL_SIZE, (row + 0.5f) * CELL_SIZE });
 
-						_entities.insert(entity);
+						_entities.insert(std::move(entity));
 					}
 
 					if (!std::strcmp(xmlElement.name(), "player"))
@@ -96,11 +92,11 @@ namespace engine
 						int column = std::stoi(xmlElement.child_value("column"));
 						assert(column >= 0 && column < _columns);
 
-						auto entity = new entities::Player{ _context };
+						_playerEntity = new entities::Player{ _context };
+						EntityPtr entity{ _playerEntity };
 						entity->setPosition(sf::Vector2f{ (column + 0.5f) * CELL_SIZE, (row + 0.5f) * CELL_SIZE });
 
-						_entities.insert(entity);
-						_playerEntity = entity;
+						_entities.insert(std::move(entity));
 					}
 
 					if (!std::strcmp(xmlElement.name(), "target"))
@@ -111,10 +107,10 @@ namespace engine
 						int column = std::stoi(xmlElement.child_value("column"));
 						assert(column >= 0 && column < _columns);
 
-						auto entity = new entities::Target{ _context };
+						EntityPtr entity{ new entities::Target{ _context } };
 						entity->setPosition(sf::Vector2f{ (column + 0.5f) * CELL_SIZE, (row + 0.5f) * CELL_SIZE });
 
-						_entities.insert(entity);
+						_entities.insert(std::move(entity));
 					}
 				}
 
