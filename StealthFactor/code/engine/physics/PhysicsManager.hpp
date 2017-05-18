@@ -1,18 +1,13 @@
 #pragma once
 
-#include <set>
 #include <vector>
 #include <ode/common.h>
 #include <SFML/System/Vector2.hpp>
 #include <engine/physics/CollisionVolumeId.hpp>
+#include <engine/physics/CollisionEntities.hpp>
 
 namespace engine
 {
-	namespace gameplay
-	{
-		class Entity;
-	}
-
 	namespace physics
 	{
 		class Manager
@@ -23,12 +18,13 @@ namespace engine
 
 			void update();
 
-			CollisionVolumeId createCollisionBox(gameplay::Entity *entity, float width, float height);
+			CollisionVolumeId createCollisionBox(const gameplay::Entity &entity);
 			void destroyCollisionVolume(CollisionVolumeId id);
 
 			void setCollisionVolumePosition(CollisionVolumeId id, const sf::Vector2f &position);
+			void setCollisionBoxSize(CollisionVolumeId id, const sf::Vector2f &size);
 
-			std::set<gameplay::Entity *> getCollisionsWith(CollisionVolumeId id) const;
+			EntitySet getCollisionsWith(CollisionVolumeId id) const;
 
 		private:
 			struct Collision

@@ -1,6 +1,10 @@
 #pragma once
 
-#include <SFML/Graphics/Transform.hpp>
+#include <algorithm>
+#include <cassert>
+#include <memory>
+#include <set>
+#include <engine/gameplay/Component.hpp>
 
 namespace engine
 {
@@ -14,25 +18,53 @@ namespace engine
 			Entity(EntityContext &context);
 			virtual ~Entity() = default;
 
-			virtual void update() = 0;
+			void update();
+			void onTransformChange();
 
-			const sf::Vector2f &getPosition() const;
-			void setPosition(const sf::Vector2f &newPosition);
+			EntityContext &getContext();
+			const EntityContext &getContext() const;
 
-			float getRotation() const;
-			void setRotation(float newRotation);
+			template <typename Component>
+			Component &addComponent();
 
-			const sf::Transform &getTransform() const;
-
-		protected:
-			EntityContext & _context;
+			template <typename Component>
+			Component *getComponent() const;
 
 		private:
-			sf::Vector2f _position{};
-			float _rotation{ 0.f };
-			sf::Transform _transform;
+			using ComponentPtr = std::unique_ptr<Component>;
+			using ComponentSet = std::set<ComponentPtr>;
 
-			void updateTransform();
+			EntityContext &_context;
+
+			ComponentSet _components;
 		};
+
+		template <typename Component>
+		inline Component &Entity::addComponent()
+		{
+			assert(getComponent<Component>() == nullptr);
+			auto component{ new Component(*this) };
+			_components.insert(ComponentPtr{ component });
+			return *component;
+		}
+
+		template <typename Component>
+		inline Component *Entity::getComponent() const
+		{
+			auto it = std::find_if(
+				std::begin(_components),
+				std::end(_components),
+				[](const ComponentPtr &component)
+			{
+				return dynamic_cast<Component *>(component.get()) != nullptr;
+			});
+
+			if (it != std::end(_components))
+			{
+				return reinterpret_cast<Component *>(it->get());
+			}
+
+			return nullptr;
+		}
 	}
 }
