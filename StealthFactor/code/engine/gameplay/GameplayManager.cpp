@@ -7,6 +7,7 @@
 #include <vector>
 #include <pugixml/pugixml.hpp>
 #include <engine/gameplay/Prefab.hpp>
+#include <engine/gameplay/components/Camera.hpp>
 #include <engine/gameplay/components/Player.hpp>
 #include <engine/gameplay/components/Transform.hpp>
 
@@ -117,6 +118,12 @@ namespace engine
 					}
 				}
 
+				std::unique_ptr<Prefab> cameraPrefab{ new Prefab{ "camera" } };
+				auto cameraEntity = cameraPrefab->instantiate(_context);
+				cameraEntity->getComponent<components::Camera>()->setActive();
+				cameraEntity->getComponent<components::Transform>()->setPosition(sf::Vector2f{ _columns * (CELL_SIZE / 2.f), _rows * (CELL_SIZE / 2.f) });
+				_entities.insert(std::move(cameraEntity));
+
 				_currentMapName = mapName;
 				_nextMapName = xmlMap.child_value("next_map");
 
@@ -150,11 +157,6 @@ namespace engine
 		{
 			assert(_playerComponent);
 			return *_playerComponent;
-		}
-
-		sf::Vector2f Manager::getViewCenter() const
-		{
-			return sf::Vector2f{ _columns * (CELL_SIZE / 2.f), _rows * (CELL_SIZE / 2.f) };
 		}
 
 		void Manager::removeEntities()
