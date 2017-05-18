@@ -58,3 +58,11 @@ Open _build\StealthFactor.sln_, choose your target, and build.
 - std::shared_ptr.
 - Move semantics.
 - Interface with opaque structures through handlers.
+
+## Session #4
+
+- Specialization through inheritance.
+- Specialization through components, entity-component-system.
+- Camera system.
+- Separation between Model and View.
+- Visitor pattern.
