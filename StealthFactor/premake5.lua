@@ -3,6 +3,7 @@ characterset "Unicode"
 cppdialect "C++11"
 
 defines {
+	"_USE_MATH_DEFINES",
 	"dSINGLE",
 }
 
@@ -44,6 +45,9 @@ filter "configurations:Release"
 	runtime "Release"
 
 filter "platforms:Win*"
+	defines {
+		"_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING",
+	}
 	system "Linux"
 
 filter "platforms:Linux*"
@@ -186,3 +190,39 @@ project "Sandbox"
 	kind "ConsoleApp"
 	-- rtti "Off"
 	runsWithDependencies()
+
+project "gtest"
+	files {
+		"code/gmock/**",
+		"code/gtest/**",
+	}
+	includedirs {
+		"code",
+		"code/gmock",
+		"code/gtest",
+		"dep/include",
+	}
+	kind "StaticLib"
+	-- rtti "Off"
+
+project "UnitTests"
+	files {
+		"code/unittests/**",
+	}
+	includedirs {
+		"code",
+		"dep/include",
+	}
+	links {
+		"Engine",
+		"gtest",
+		"Platform",
+	}
+	kind "ConsoleApp"
+	-- rtti "Off"
+	runsWithDependencies()
+
+	filter "platforms:Linux*"
+		links {
+			"pthread"
+		}
