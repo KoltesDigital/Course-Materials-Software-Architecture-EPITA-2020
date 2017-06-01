@@ -12,6 +12,7 @@
 #include <engine/gameplay/components/Renderer.hpp>
 #include <engine/gameplay/components/Target.hpp>
 #include <engine/gameplay/components/Transform.hpp>
+#include <engine/serialization/XMLLoader.hpp>
 
 namespace engine
 {
@@ -62,9 +63,14 @@ namespace engine
 					{
 						auto &enemy = entity->addComponent<components::Enemy>();
 
-						std::string archetype = xmlElement.child_value("archetype");
-
-						enemy.setArchetypeName(archetype);
+						std::string archetypeName = xmlElement.child_value("archetype");
+						serialization::XMLLoader loader{ archetypeName };
+						if (loader.isLoaded())
+						{
+							Archetype archetype;
+							archetype.serialize(loader);
+							enemy.setArchetype(archetype);
+						}
 					}
 
 					else if (!std::strcmp(xmlElement.name(), "player"))
