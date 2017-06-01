@@ -66,3 +66,12 @@ Open _build\StealthFactor.sln_, choose your target, and build.
 - Camera system.
 - Separation between Model and View.
 - Visitor pattern.
+
+## Session #5
+
+- Serialization.
+- Visitor pattern, again.
+- Model-View, again.
+- Command pattern.
+- Test-driven development, unit tests, integration tests...
+- Metrics.
