@@ -102,6 +102,7 @@ namespace engine
 		{
 			virtual void serialize(void *serializable, Serializer &serializer) const = 0;
 			virtual void *create() const = 0;
+			virtual std::string getClassName() const = 0;
 		};
 
 		template <typename T>
@@ -116,6 +117,11 @@ namespace engine
 			{
 				assert(false);
 				return nullptr;
+			}
+
+			std::string getClassName() const override
+			{
+				return serialization::getClassName<T>();
 			}
 
 			static ImplSerializableMethods value;
@@ -141,6 +147,11 @@ namespace engine
 			void *create() const override
 			{
 				return new T;
+			}
+
+			std::string getClassName() const override
+			{
+				return serialization::getClassName<T>();
 			}
 
 			static ImplSerializableMethods value;

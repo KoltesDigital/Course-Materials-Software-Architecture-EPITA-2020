@@ -94,4 +94,8 @@ namespace engine
 			break;
 		}
 	}
-} // namespace engine
+
+	void Engine::onChat(const std::string &)
+	{
+	}
+}
