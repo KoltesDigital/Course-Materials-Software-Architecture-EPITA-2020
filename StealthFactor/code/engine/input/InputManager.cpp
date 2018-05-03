@@ -20,7 +20,7 @@ namespace engine
 			if (!_active)
 				return false;
 
-			return justPressedKeys.find(key) != std::end(justPressedKeys);
+			return _justPressedKeys.find(key) != std::end(_justPressedKeys);
 		}
 
 		bool Manager::isKeyJustReleased(sf::Keyboard::Key key) const
@@ -28,23 +28,23 @@ namespace engine
 			if (!_active)
 				return false;
 
-			return justReleasedKeys.find(key) != std::end(justReleasedKeys);
+			return _justReleasedKeys.find(key) != std::end(_justReleasedKeys);
 		}
 
 		void Manager::clear()
 		{
-			justPressedKeys.clear();
-			justReleasedKeys.clear();
+			_justPressedKeys.clear();
+			_justReleasedKeys.clear();
 		}
 
 		void Manager::onKeyPressed(const sf::Event::KeyEvent &event)
 		{
-			justPressedKeys.insert(event.code);
+			_justPressedKeys.insert(event.code);
 		}
 
 		void Manager::onKeyReleased(const sf::Event::KeyEvent &event)
 		{
-			justReleasedKeys.insert(event.code);
+			_justReleasedKeys.insert(event.code);
 		}
 
 		void Manager::setActive(bool active)
