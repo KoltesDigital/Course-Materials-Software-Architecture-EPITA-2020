@@ -9,8 +9,8 @@
 namespace engine
 {
 	Engine::Engine()
-		: _gameplayManager{ _graphicsManager, _inputManager, _physicsManager }
-		, _graphicsManager{ *this }
+		: _gameplayManager{ _assetsManager, _graphicsManager, _inputManager, _physicsManager }
+		, _graphicsManager{ _assetsManager, *this }
 	{
 	}
 

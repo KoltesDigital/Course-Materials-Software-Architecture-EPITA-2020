@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <SFML/Graphics/Color.hpp>
+#include <engine/assets/Asset.hpp>
 
 namespace engine
 {
@@ -20,7 +21,7 @@ namespace engine
 			float outlineThickness;
 
 			virtual ~ShapeDescriptor() {}
-			virtual void accept(ShapeDescriptorVisitor &visitor) = 0;
+			virtual void accept(ShapeDescriptorVisitor &visitor);
 		};
 
 		struct CircleDescriptor : ShapeDescriptor
@@ -45,20 +46,15 @@ namespace engine
 			virtual void rectangle(RectangleDescriptor &rectangleDescriptor) = 0;
 		};
 
-		struct ShapeListDescriptor
+		struct ShapeListDescriptor : assets::Asset
 		{
 		public:
 			using ShapeDescriptorPtr = std::unique_ptr<ShapeDescriptor>;
 			using ShapeDescriptors = std::vector<ShapeDescriptorPtr>;
 
-			bool load(const std::string &name);
+			ShapeDescriptors shapeDescriptors;
 
-			void visit(ShapeDescriptorVisitor &visitor);
-
-			const ShapeDescriptors &getShapeDescriptors() const;
-
-		private:
-			ShapeDescriptors _shapeDescriptors;
+			void visit(ShapeDescriptorVisitor &visitor) const;
 		};
 	}
 }
