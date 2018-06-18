@@ -4,7 +4,6 @@ cppdialect "C++11"
 
 defines {
 	"_USE_MATH_DEFINES",
-	"dSINGLE",
 }
 
 flags {
@@ -62,7 +61,6 @@ filter "platforms:*64"
 function runsWithDependencies()
 	filter "platforms:Linux*"
 		links {
-			"ode",
 			"sfml-graphics",
 			"sfml-network",
 			"sfml-system",
