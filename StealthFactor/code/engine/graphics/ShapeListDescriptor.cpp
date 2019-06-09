@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <pugixml/pugixml.hpp>
+#include <engine/util/Assert.hpp>
 
 namespace engine
 {
@@ -29,7 +30,7 @@ namespace engine
 
 			if (result)
 			{
-				assert(!doc.empty());
+				ASSERT(!doc.empty());
 				auto xmlShapeList = doc.first_child();
 
 				for (auto &xmlShape : xmlShapeList.child("shapes").children())

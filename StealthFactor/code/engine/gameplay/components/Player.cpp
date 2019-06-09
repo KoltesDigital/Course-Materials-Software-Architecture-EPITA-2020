@@ -1,6 +1,5 @@
 #include "Player.hpp"
 
-#include <cassert>
 #include <ode/collision.h>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Shape.hpp>

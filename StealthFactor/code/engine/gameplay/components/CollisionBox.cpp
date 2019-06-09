@@ -1,10 +1,10 @@
 #include "CollisionBox.hpp"
 
-#include <cassert>
 #include <engine/physics/PhysicsManager.hpp>
 #include <engine/gameplay/Entity.hpp>
 #include <engine/gameplay/EntityContext.hpp>
 #include <engine/gameplay/components/Transform.hpp>
+#include <engine/util/Assert.hpp>
 
 namespace engine
 {
@@ -16,7 +16,7 @@ namespace engine
 				: Component{ entity }
 			{
 				_collisionGeomId = getPhysicsManager().createCollisionBox(getEntity());
-				assert(_collisionGeomId);
+				ASSERT(_collisionGeomId);
 			}
 
 			CollisionBox::~CollisionBox()

@@ -1,10 +1,10 @@
 #pragma once
 
 #include <algorithm>
-#include <cassert>
 #include <memory>
 #include <set>
 #include <engine/gameplay/Component.hpp>
+#include <engine/util/Assert.hpp>
 
 namespace engine
 {
@@ -42,7 +42,7 @@ namespace engine
 		template <typename Component>
 		inline Component &Entity::addComponent()
 		{
-			assert(getComponent<Component>() == nullptr);
+			ASSERT(getComponent<Component>() == nullptr);
 			auto component{ new Component(*this) };
 			_components.insert(ComponentPtr{ component });
 			return *component;

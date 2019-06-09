@@ -1,8 +1,8 @@
 #include "PhysicsManager.hpp"
 
-#include <cassert>
 #include <ode/odeinit.h>
 #include <ode/collision.h>
+#include <engine/util/Assert.hpp>
 
 namespace engine
 {
@@ -26,7 +26,7 @@ namespace engine
 		{
 			if (_spaceId != nullptr)
 			{
-				assert(dSpaceGetNumGeoms(_spaceId) == 0);
+				ASSERT(dSpaceGetNumGeoms(_spaceId) == 0);
 				dSpaceDestroy(_spaceId);
 			}
 
@@ -58,7 +58,7 @@ namespace engine
 
 		void Manager::setCollisionBoxSize(CollisionVolumeId id, const sf::Vector2f &size)
 		{
-			assert(dGeomGetClass(id) == dBoxClass);
+			ASSERT(dGeomGetClass(id) == dBoxClass);
 			dGeomBoxSetLengths(id, size.x, size.y, 1.f);
 		}
 

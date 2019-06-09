@@ -35,7 +35,7 @@ namespace engine
 
 			if (result)
 			{
-				assert(!doc.empty());
+				ASSERT(!doc.empty());
 				auto xmlMap = doc.first_child();
 
 				entity.reset(new Entity{ context });

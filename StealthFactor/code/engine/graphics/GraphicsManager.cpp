@@ -1,12 +1,12 @@
 #include "engine/graphics/GraphicsManager.hpp"
 
-#include <cassert>
 #include <SFML/Window/Event.hpp>
 #include <engine/input/InputManager.hpp>
 #include <engine/graphics/Camera.hpp>
 #include <engine/graphics/ShapeListDescriptor.hpp>
 #include <engine/graphics/ShapeListInstance.hpp>
 #include <engine/gameplay/GameplayManager.hpp>
+#include <engine/util/Assert.hpp>
 #include <engine/Engine.hpp>
 
 namespace engine
@@ -38,7 +38,7 @@ namespace engine
 
 		void Manager::tearDown()
 		{
-			assert(_shapeListInstances.size() == 0);
+			ASSERT(_shapeListInstances.size() == 0);
 
 			_window.close();
 		}
@@ -56,7 +56,7 @@ namespace engine
 		{
 			_window.clear(sf::Color::Black);
 
-			assert(_activeCamera);
+			ASSERT(_activeCamera);
 			sf::View view{ _activeCamera->getPosition(), sf::Vector2f{ (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT } };
 			_window.setView(view);
 
@@ -88,19 +88,19 @@ namespace engine
 			{
 				return camera.get() == id;
 			});
-			assert(it != std::end(_cameras));
+			ASSERT(it != std::end(_cameras));
 			_cameras.erase(it);
 		}
 
 		void Manager::setCameraActive(CameraId id)
 		{
-			assert(id);
+			ASSERT(id);
 			_activeCamera = id;
 		}
 
 		void Manager::setCameraPosition(CameraId id, const sf::Vector2f &position)
 		{
-			assert(id);
+			ASSERT(id);
 			auto camera = id;
 			camera->setPosition(position);
 		}
@@ -126,7 +126,7 @@ namespace engine
 			{
 				return instance.get() == id;
 			});
-			assert(it != std::end(_shapeListInstances));
+			ASSERT(it != std::end(_shapeListInstances));
 			_shapeListInstances.erase(it);
 		}
 

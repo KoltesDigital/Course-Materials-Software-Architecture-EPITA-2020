@@ -1,10 +1,10 @@
 #include "engine/Engine.hpp"
 
-#include <cassert>
 #include <iostream>
 #include <sstream>
 #include <pugixml/pugixml.hpp>
 #include <SFML/System.hpp>
+#include <engine/util/Assert.hpp>
 
 namespace engine
 {
@@ -21,7 +21,7 @@ namespace engine
 
 		if (result)
 		{
-			assert(!doc.empty());
+			ASSERT(!doc.empty());
 			auto configuration = doc.first_child();
 			_startMap = configuration.child_value("start_map");
 

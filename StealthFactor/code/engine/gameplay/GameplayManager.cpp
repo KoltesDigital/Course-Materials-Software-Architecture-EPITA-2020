@@ -58,14 +58,14 @@ namespace engine
 
 			if (result)
 			{
-				assert(!doc.empty());
+				ASSERT(!doc.empty());
 				auto xmlMap = doc.first_child();
 
 				_rows = std::stoi(xmlMap.child_value("rows"));
-				assert(_rows >= 0);
+				ASSERT(_rows >= 0);
 
 				_columns = std::stoi(xmlMap.child_value("columns"));
-				assert(_columns >= 0);
+				ASSERT(_columns >= 0);
 
 				for (auto &xmlElement : xmlMap.child("elements").children())
 				{
@@ -97,10 +97,10 @@ namespace engine
 						auto transform = entity->getComponent<components::Transform>();
 
 						int row = std::stoi(xmlElement.child_value("row"));
-						assert(row >= 0 && row < _rows);
+						ASSERT(row >= 0 && row < _rows);
 
 						int column = std::stoi(xmlElement.child_value("column"));
-						assert(column >= 0 && column < _columns);
+						ASSERT(column >= 0 && column < _columns);
 
 						transform->setPosition(sf::Vector2f{ (column + 0.5f) * CELL_SIZE, (row + 0.5f) * CELL_SIZE });
 
@@ -155,7 +155,7 @@ namespace engine
 
 		const components::Player &Manager::getPlayer() const
 		{
-			assert(_playerComponent);
+			ASSERT(_playerComponent);
 			return *_playerComponent;
 		}
 
