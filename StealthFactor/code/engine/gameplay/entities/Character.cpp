@@ -15,22 +15,20 @@ namespace engine
 			Character::Character(EntityContext &context)
 				: Entity{ context }
 			{
-				_collisionGeomId = _context.physicsManager.createCollisionBox(this, gameplay::Manager::CELL_SIZE * 0.9f, gameplay::Manager::CELL_SIZE * 0.9f);
-				assert(_collisionGeomId);
+				_collisionVolumeId = _context.physicsManager.createCollisionBox(this, gameplay::Manager::CELL_SIZE * 0.9f, gameplay::Manager::CELL_SIZE * 0.9f);
+				assert(_collisionVolumeId);
 			}
 
 			Character::~Character()
 			{
 				_context.graphicsManager.destroyShapeListInstance(_shapeListId);
-				_context.physicsManager.destroyCollisionVolume(_collisionGeomId);
+				_context.physicsManager.destroyCollisionVolume(_collisionVolumeId);
 			}
 
 			void Character::propagateTransform()
 			{
 				_context.graphicsManager.setShapeListInstanceTransform(_shapeListId, getTransform());
-
-				auto &position = getPosition();
-				dGeomSetPosition(_collisionGeomId, position.x, position.y, 0);
+				_context.physicsManager.setCollisionVolumePosition(_collisionVolumeId, getPosition());
 			}
 		}
 	}

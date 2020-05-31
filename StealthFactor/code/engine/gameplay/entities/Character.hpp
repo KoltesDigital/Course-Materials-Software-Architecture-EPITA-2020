@@ -1,8 +1,8 @@
 #pragma once
 
-#include <ode/collision.h>
 #include <engine/graphics/ShapeListId.hpp>
 #include <engine/gameplay/Entity.hpp>
+#include <engine/physics/CollisionVolumeId.hpp>
 
 namespace engine
 {
@@ -20,7 +20,7 @@ namespace engine
 
 			protected:
 				graphics::ShapeListId _shapeListId;
-				dGeomID _collisionGeomId;
+				physics::CollisionVolumeId _collisionVolumeId;
 
 				bool _isWalking{ false };
 			};

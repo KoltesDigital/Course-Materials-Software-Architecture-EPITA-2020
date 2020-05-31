@@ -3,6 +3,7 @@
 #include <ode/collision.h>
 #include <engine/graphics/ShapeListId.hpp>
 #include <engine/gameplay/Entity.hpp>
+#include <engine/physics/CollisionVolumeId.hpp>
 
 namespace engine
 {
@@ -22,7 +23,7 @@ namespace engine
 
 			private:
 				graphics::ShapeListId _shapeListId;
-				dGeomID _collisionGeomId;
+				physics::CollisionVolumeId _collisionVolumeId;
 			};
 		}
 	}

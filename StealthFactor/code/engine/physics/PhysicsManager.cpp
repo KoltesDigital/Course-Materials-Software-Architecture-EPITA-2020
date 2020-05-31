@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <ode/odeinit.h>
+#include <ode/collision.h>
 
 namespace engine
 {
@@ -38,29 +39,34 @@ namespace engine
 			dSpaceCollide(_spaceId, &_frameCollisions, &Manager::nearCallback);
 		}
 
-		dGeomID Manager::createCollisionBox(gameplay::Entity *entity, float width, float height)
+		CollisionVolumeId Manager::createCollisionBox(gameplay::Entity *entity, float width, float height)
 		{
 			auto id = dCreateBox(_spaceId, width, height, 1.f);
 			dGeomSetData(id, entity);
 			return id;
 		}
 
-		void Manager::destroyCollisionVolume(dGeomID id)
+		void Manager::destroyCollisionVolume(CollisionVolumeId id)
 		{
 			dGeomDestroy(id);
 		}
 
-		std::set<gameplay::Entity *> Manager::getCollisionsWith(dGeomID object) const
+		void Manager::setCollisionVolumePosition(CollisionVolumeId id, const sf::Vector2f &position)
+		{
+			dGeomSetPosition(id, position.x, position.y, 0);
+		}
+
+		std::set<gameplay::Entity *> Manager::getCollisionsWith(CollisionVolumeId id) const
 		{
 			std::set<gameplay::Entity *> entityCollisions;
 
 			for (auto &collision : _frameCollisions)
 			{
-				if (collision.o1 == object)
+				if (collision.o1 == id)
 				{
 					entityCollisions.insert(reinterpret_cast<gameplay::Entity *>(dGeomGetData(collision.o2)));
 				}
-				if (collision.o2 == object)
+				if (collision.o2 == id)
 				{
 					entityCollisions.insert(reinterpret_cast<gameplay::Entity *>(dGeomGetData(collision.o1)));
 				}

@@ -66,7 +66,7 @@ namespace engine
 					propagateTransform();
 				}
 
-				auto collisions = _context.physicsManager.getCollisionsWith(_collisionGeomId);
+				auto collisions = _context.physicsManager.getCollisionsWith(_collisionVolumeId);
 				for (auto &entity : collisions)
 				{
 					auto targetEntity = dynamic_cast<entities::Target *>(entity);

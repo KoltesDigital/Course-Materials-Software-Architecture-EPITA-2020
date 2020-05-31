@@ -18,14 +18,14 @@ namespace engine
 				_shapeListId = _context.graphicsManager.createShapeListInstance("target");
 				assert(_shapeListId);
 
-				_collisionGeomId = _context.physicsManager.createCollisionBox(this, gameplay::Manager::CELL_SIZE * 0.9f, gameplay::Manager::CELL_SIZE * 0.9f);
-				assert(_collisionGeomId);
+				_collisionVolumeId = _context.physicsManager.createCollisionBox(this, gameplay::Manager::CELL_SIZE * 0.9f, gameplay::Manager::CELL_SIZE * 0.9f);
+				assert(_collisionVolumeId);
 			}
 
 			Target::~Target()
 			{
 				_context.graphicsManager.destroyShapeListInstance(_shapeListId);
-				_context.physicsManager.destroyCollisionVolume(_collisionGeomId);
+				_context.physicsManager.destroyCollisionVolume(_collisionVolumeId);
 			}
 
 			void Target::update()
@@ -38,7 +38,7 @@ namespace engine
 				_context.graphicsManager.setShapeListInstanceTransform(_shapeListId, getTransform());
 
 				auto &position = getPosition();
-				dGeomSetPosition(_collisionGeomId, position.x, position.y, 0);
+				dGeomSetPosition(_collisionVolumeId, position.x, position.y, 0);
 			}
 		}
 	}
