@@ -75,3 +75,7 @@ Open _build\StealthFactor.sln_, choose your target, and build.
 - Command pattern.
 - Test-driven development, unit tests, integration tests...
 - Metrics.
+
+## Session #6
+
+- Application of the above teachings in another project.
